@@ -66,15 +66,17 @@ async function loginUser({ email, password }) {
 
   if (error) throw new Error("Email không tồn tại");
 
+  console.log("user", user);
+
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) throw new Error("Sai mật khẩu");
 
   const token = jwt.sign(
-    { id: user.id, email: user.email },
+    { id: user.id, email: user.email, name: user.name, avatar: user.avatar, phone: user.phone },
     process.env.JWT_SECRET,
-    {
-      expiresIn: "1d",
-    }
+    // {
+    //   expiresIn: "1d",
+    // }
   );
 
   return { token, user };
