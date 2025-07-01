@@ -2,16 +2,16 @@ const supabase = require("../../config/supabase");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-async function registerUser({ name, phone,id_type_card, drive_license_number, plate_license,  email, password }) {
+async function registerDriver({ name, phone, id_type_car, drive_license_number, plate_license, email, password }) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const { data, error } = await supabase
-    .from("users")
+    .from("drivers")
     .insert([
       {
         name,
         phone,
-        id_type_card,
+        id_type_car,
         drive_license_number,
         plate_license,
         email,
@@ -25,16 +25,14 @@ async function registerUser({ name, phone,id_type_card, drive_license_number, pl
   return data;
 }
 
-async function loginUser({ email, password }) {
+async function loginDriver({ email, password }) {
   const { data: user, error } = await supabase
-    .from("users")
+    .from("drivers")
     .select("*")
     .eq("email", email)
     .single();
 
   if (error) throw new Error("Email không tồn tại");
-
-  console.log("user", user);
 
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) throw new Error("Sai mật khẩu");
@@ -49,4 +47,4 @@ async function loginUser({ email, password }) {
 
   return { token, user };
 }
-module.exports = { registerUser, loginUser };
+module.exports = { registerDriver, loginDriver };

@@ -1,9 +1,9 @@
-const { registerUser, loginUser } = require("../services/authService");
+const { registerDriver, loginDriver } = require("../services/authService");
 const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   try {
-    const user = await registerUser(req.body);
+    const user = await registerDriver(req.body);
     res.status(200).json({ message: "Đăng ký thành công", user });
   } catch (err) {
     res.status(400).json({ message: "Đăng ký thất bại", error: err.message });
@@ -12,10 +12,10 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const { token, user } = await loginUser(req.body);
+    const { token, user } = await loginDriver(req.body);
     res.status(200).json({ message: 'Đăng nhập thành công', token, user });
   } catch (err) {
-    res.status(401).json({ message: 'Đăng nhập thất bại', error: err.message });
+    res.status(400).json({ message: 'Đăng nhập thất bại', error: err.message });
   }
 };
 
