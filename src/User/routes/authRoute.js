@@ -1,6 +1,5 @@
 const express = require("express");
 const { googleAuth, register, login, decodeJwt } = require("../controllers/authController");
-
 const router = express.Router();
 
 router.post("/google", googleAuth);

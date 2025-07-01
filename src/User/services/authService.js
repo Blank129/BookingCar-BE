@@ -1,5 +1,5 @@
 const { OAuth2Client } = require("google-auth-library");
-const supabase = require("../config/supabase");
+const supabase = require("../../config/supabase");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
