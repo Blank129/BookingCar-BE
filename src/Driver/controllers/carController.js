@@ -1,4 +1,5 @@
-const { getAllCars } = require("../services/carService");
+const { getAllCars, findNearbyDriver } = require("../services/carService");
+const supabase = require("../../config/supabase");
 
 const getCars = async (req, res) => {
   try {
@@ -9,4 +10,42 @@ const getCars = async (req, res) => {
   }
 };
 
-module.exports = { getCars };
+
+
+const updateDriverStatus = async (req, res) => {
+  const { driver_id, is_online, lat, lng } = req.body;
+
+  console.log("body", req.body);
+
+  if (!driver_id || typeof is_online !== 'boolean') {
+    return res.status(400).json({ message: 'Thiếu thông tin driver_id hoặc is_online' });
+  }
+
+  const updates = {
+    status: is_online ? 'online' : 'offline',
+  };
+
+  // Nếu tài xế đang online và có vị trí, lưu dưới dạng POINT(lng lat)
+  if (is_online && lat && lng) {
+    const location = `${lat},${lng}`; // Lưu dưới dạng text
+    updates.location = location;
+  }
+
+  // Cập nhật dữ liệu vào cơ sở dữ liệu
+  const { data, error } = await supabase
+    .from('drivers')
+    .update(updates)
+    .eq('id', driver_id);
+
+  if (error) {
+    console.error("Lỗi cập nhật:", error);
+    return res.status(500).json({ message: 'Cập nhật thất bại', error });
+  }
+
+  return res.status(200).json({ message: 'Cập nhật thành công', status: updates.status });
+};
+
+
+
+
+module.exports = { getCars, updateDriverStatus };
