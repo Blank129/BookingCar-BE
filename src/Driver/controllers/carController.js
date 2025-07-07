@@ -15,8 +15,6 @@ const getCars = async (req, res) => {
 const updateDriverStatus = async (req, res) => {
   const { driver_id, is_online, lat, lng } = req.body;
 
-  console.log("body", req.body);
-
   if (!driver_id || typeof is_online !== 'boolean') {
     return res.status(400).json({ message: 'Thiếu thông tin driver_id hoặc is_online' });
   }
@@ -25,7 +23,6 @@ const updateDriverStatus = async (req, res) => {
     status: is_online ? 'online' : 'offline',
   };
 
-  // Nếu tài xế đang online và có vị trí, lưu dưới dạng POINT(lng lat)
   if (is_online && lat && lng) {
     const location = `${lat},${lng}`; // Lưu dưới dạng text
     updates.location = location;
@@ -44,8 +41,5 @@ const updateDriverStatus = async (req, res) => {
 
   return res.status(200).json({ message: 'Cập nhật thành công', status: updates.status });
 };
-
-
-
 
 module.exports = { getCars, updateDriverStatus };

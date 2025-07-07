@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { bookingCar } = require("../services/mapService");
 
 const getRoute = async (req, res) => {
   const { pickup, destination } = req.body;
@@ -71,5 +72,14 @@ const getRouteDistance = async (req, res) => {
   }
 };
 
+const booking = async (req,res) => {
+  try {
+    const data = await bookingCar(req.body);
+    res.status(200).json({ message: "Booking thành công", data});
+  } catch (error) {
+    res.status(400).json({ message: "Booking thất bại", error});    
+  }
+}
 
-module.exports = { getRoute, getRouteDistance };
+
+module.exports = { getRoute, getRouteDistance, booking };
