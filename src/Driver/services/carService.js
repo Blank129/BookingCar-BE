@@ -6,4 +6,16 @@ async function getAllCars() {
   return data;
 }
 
-module.exports = { getAllCars };
+async function getBookings(id_type_car) {
+  let query = supabase.from("booking").select("*");
+
+  if (id_type_car) {
+    query = query.eq("id_type_car", id_type_car);
+  }
+
+  const { data, error } = await query;
+  if (error) throw error;
+  return data;
+}
+
+module.exports = { getAllCars, getBookings };

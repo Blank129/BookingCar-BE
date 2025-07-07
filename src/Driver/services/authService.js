@@ -38,7 +38,7 @@ async function loginDriver({ email, password }) {
   if (!validPassword) throw new Error("Sai mật khẩu");
 
   const token = jwt.sign(
-    { id: user.id, email: user.email, name: user.name, avatar: user.avatar, phone: user.phone },
+    { id: user.id, email: user.email, name: user.name, avatar: user.avatar, phone: user.phone, id_type_car: user.id_type_car, drive_license_number: user.drive_license_number, plate_license: user.plate_license },
     process.env.JWT_SECRET,
     // {
     //   expiresIn: "1d",

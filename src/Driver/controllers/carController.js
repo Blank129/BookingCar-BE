@@ -1,4 +1,4 @@
-const { getAllCars, findNearbyDriver } = require("../services/carService");
+const { getAllCars, findNearbyDriver, getBookings } = require("../services/carService");
 const supabase = require("../../config/supabase");
 
 const getCars = async (req, res) => {
@@ -9,8 +9,6 @@ const getCars = async (req, res) => {
     res.status(500).json({ error: error.message || "Không lấy được danh sách xe" });
   }
 };
-
-
 
 const updateDriverStatus = async (req, res) => {
   const { driver_id, is_online, lat, lng } = req.body;
@@ -42,4 +40,14 @@ const updateDriverStatus = async (req, res) => {
   return res.status(200).json({ message: 'Cập nhật thành công', status: updates.status });
 };
 
-module.exports = { getCars, updateDriverStatus };
+const getBooking = async (req, res) => {
+  try {
+    const { id_type_car } = req.params; 
+    const data = await getBookings(id_type_car);
+    res.status(200).json({ data });
+  } catch (error) {
+    res.status(500).json({ error: error.message || "Không lấy được danh sách bookings" });
+  }
+};
+
+module.exports = { getCars, updateDriverStatus, getBooking };
