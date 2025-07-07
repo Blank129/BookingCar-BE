@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get("/cars", getCars);
 router.post("/status", updateDriverStatus);
-router.get("/bookings", getBooking);
+router.get("/bookings/:id_type_car", getBooking);
 
 module.exports = router;
