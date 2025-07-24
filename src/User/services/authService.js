@@ -66,8 +66,6 @@ async function loginUser({ email, password }) {
 
   if (error) throw new Error("Email không tồn tại");
 
-  console.log("user", user);
-
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) throw new Error("Sai mật khẩu");
 
