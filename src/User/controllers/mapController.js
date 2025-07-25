@@ -34,7 +34,6 @@ const getRoute = async (req, res) => {
 
 const getRouteDistance = async (req, res) => {
   const { start, end } = req.body;
-  // Validate coordinates: must be [lat, lng]
   if (
     !start || !end ||
     !Array.isArray(start) || !Array.isArray(end) ||
@@ -43,7 +42,6 @@ const getRouteDistance = async (req, res) => {
     return res.status(400).json({ error: "Invalid coordinates format" });
   }
 
-  // Đảo từ [lat, lng] → [lng, lat] cho ORS
   const startCoord = [start[1], start[0]];
   const endCoord = [end[1], end[0]];
 
