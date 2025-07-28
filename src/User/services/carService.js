@@ -23,7 +23,7 @@ async function getProfileUser(id_user) {
   try {
     const { data, error } = await supabase
       .from("users")
-      .select("id, name, phone, email, avatar, created_at")
+      .select("id, name, phone, email, avatar, address, created_at")
       .eq("id", id_user)
       .single();
 
