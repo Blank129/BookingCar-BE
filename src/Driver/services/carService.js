@@ -59,5 +59,121 @@ async function postApproveBooking(id_booking, id_driver) {
   return { booking: data[0] };
 }
 
+async function postStatusSecondSerivce(id_booking){
+  if(!id_booking){
+    throw new Error('Thiếu id_booking')
+  }
 
-module.exports = { getAllCars, getBookings, postApproveBooking };
+  const { data: existingBookings, error: fetchError } = await supabase
+    .from("booking")
+    .select("id")
+    .eq("id", id_booking);
+
+  if (fetchError) throw new Error("Lỗi Supabase khi kiểm tra: " + fetchError.message);
+  if (!existingBookings || existingBookings.length === 0) {
+    throw new Error("Không tìm thấy bản ghi booking");
+  }
+
+  const { data, error } = await supabase
+    .from("booking")
+    .update({ 
+      id_status_booking: 2
+    })
+    .eq("id", id_booking)
+    .select();
+
+  if (error) throw new Error("Lỗi Supabase khi cập nhật: " + error.message);
+  if (!data || data.length === 0) throw new Error("Không tìm thấy bản");
+
+  return { booking: data[0] };
+}
+
+async function postStatusThirdSerivce(id_booking){
+  if(!id_booking){
+    throw new Error('Thiếu id_booking')
+  }
+
+  const { data: existingBookings, error: fetchError } = await supabase
+    .from("booking")
+    .select("id")
+    .eq("id", id_booking);
+
+  if (fetchError) throw new Error("Lỗi Supabase khi kiểm tra: " + fetchError.message);
+  if (!existingBookings || existingBookings.length === 0) {
+    throw new Error("Không tìm thấy bản ghi booking");
+  }
+
+  const { data, error } = await supabase
+    .from("booking")
+    .update({ 
+      id_status_booking: 3
+    })
+    .eq("id", id_booking)
+    .select();
+
+  if (error) throw new Error("Lỗi Supabase khi cập nhật: " + error.message);
+  if (!data || data.length === 0) throw new Error("Không tìm thấy bản");
+
+  return { booking: data[0] };
+}
+
+
+async function postStatusFourthSerivce(id_booking){
+  if(!id_booking){
+    throw new Error('Thiếu id_booking')
+  }
+
+  const { data: existingBookings, error: fetchError } = await supabase
+    .from("booking")
+    .select("id")
+    .eq("id", id_booking);
+
+  if (fetchError) throw new Error("Lỗi Supabase khi kiểm tra: " + fetchError.message);
+  if (!existingBookings || existingBookings.length === 0) {
+    throw new Error("Không tìm thấy bản ghi booking");
+  }
+
+  const { data, error } = await supabase
+    .from("booking")
+    .update({ 
+      id_status_booking: 4
+    })
+    .eq("id", id_booking)
+    .select();
+
+  if (error) throw new Error("Lỗi Supabase khi cập nhật: " + error.message);
+  if (!data || data.length === 0) throw new Error("Không tìm thấy bản");
+
+  return { booking: data[0] };
+}
+
+async function postStatusFifthSerivce(id_booking){
+  if(!id_booking){
+    throw new Error('Thiếu id_booking')
+  }
+
+  const { data: existingBookings, error: fetchError } = await supabase
+    .from("booking")
+    .select("id")
+    .eq("id", id_booking);
+
+  if (fetchError) throw new Error("Lỗi Supabase khi kiểm tra: " + fetchError.message);
+  if (!existingBookings || existingBookings.length === 0) {
+    throw new Error("Không tìm thấy bản ghi booking");
+  }
+
+  const { data, error } = await supabase
+    .from("booking")
+    .update({ 
+      id_status_booking: 5
+    })
+    .eq("id", id_booking)
+    .select();
+
+  if (error) throw new Error("Lỗi Supabase khi cập nhật: " + error.message);
+  if (!data || data.length === 0) throw new Error("Không tìm thấy bản");
+
+  return { booking: data[0] };
+}
+
+module.exports = { getAllCars, getBookings, postApproveBooking, postStatusSecondSerivce, postStatusThirdSerivce, postStatusFourthSerivce, postStatusFifthSerivce };

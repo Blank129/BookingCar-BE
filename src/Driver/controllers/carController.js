@@ -1,4 +1,4 @@
-const { getAllCars, findNearbyDriver, getBookings, postApproveBooking } = require("../services/carService");
+const { getAllCars, findNearbyDriver, getBookings, postApproveBooking, postStatusSecondSerivce, postStatusThirdSerivce, postStatusFourthSerivce, postStatusFifthSerivce } = require("../services/carService");
 const supabase = require("../../config/supabase");
 
 const getCars = async (req, res) => {
@@ -71,5 +71,65 @@ const approveBooking = async (req, res) => {
 };
 
 
+const statusSecondController = async (req, res) => {
+  const {id_booking} = req.params;
 
-module.exports = { getCars, updateDriverStatus, getBooking, approveBooking };
+  try {
+    const result = await postStatusSecondSerivce(id_booking);
+    if (!result) {
+      return res.status(404).json({ message: "Không tìm thấy booking" });
+    }
+
+    return res.status(200).json({ message: "Cập nhật trạng thái thành công" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message || "Lỗi khi cập nhật trạng thái" }); 
+  }
+}
+
+const statusThirdController = async (req, res) => {
+  const {id_booking} = req.params;
+
+  try {
+    const result = await postStatusThirdSerivce(id_booking);
+    if (!result) {
+      return res.status(404).json({ message: "Không tìm thấy booking" });
+    }
+
+    return res.status(200).json({ message: "Cập nhật trạng thái thành công" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message || "Lỗi khi cập nhật trạng thái" }); 
+  }
+}
+
+const statusFourthController = async (req, res) => {
+  const {id_booking} = req.params;
+
+  try {
+    const result = await postStatusFourthSerivce(id_booking);
+    if (!result) {
+      return res.status(404).json({ message: "Không tìm thấy booking" });
+    }
+
+    return res.status(200).json({ message: "Cập nhật trạng thái thành công" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message || "Lỗi khi cập nhật trạng thái" }); 
+  }
+}
+
+const statusFifthController = async (req, res) => {
+  const {id_booking} = req.params;
+
+  try {
+    const result = await postStatusFifthSerivce(id_booking);
+    if (!result) {
+      return res.status(404).json({ message: "Không tìm thấy booking" });
+    }
+
+    return res.status(200).json({ message: "Cập nhật trạng thái thành công" });
+  } catch (error) {
+    return res.status(500).json({ error: error.message || "Lỗi khi cập nhật trạng thái" }); 
+  }
+}
+
+
+module.exports = { getCars, updateDriverStatus, getBooking, approveBooking, statusSecondController, statusThirdController, statusFourthController, statusFifthController };
