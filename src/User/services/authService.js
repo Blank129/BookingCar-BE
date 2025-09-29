@@ -79,4 +79,5 @@ async function loginUser({ email, password }) {
 
   return { token, user };
 }
+
 module.exports = { verifyGoogleToken, findOrCreateUser, registerUser, loginUser };
