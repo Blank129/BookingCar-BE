@@ -5,7 +5,14 @@ const axios = require("axios");
 const PORT = process.env.PORT || 5000;
 const crypto = require('crypto');
 const base64url = require('base64url');
+const { HttpsProxyAgent } = require('https-proxy-agent');
 
+const userNameProxy = process.env.USERNAME_PROXY;
+const passwordProxy = process.env.PASSWORD_PROXY;
+const hostProxy = process.env.HOST_PROXY;
+const portProxy = process.env.PORT_PROXY;
+const proxyAgent = new HttpsProxyAgent(
+  `http://${userNameProxy}:${passwordProxy}@${hostProxy}:${portProxy}`);
 function generateCodeVerifier(length = 43) {
     return base64url(crypto.randomBytes(length));
 }
@@ -82,7 +89,8 @@ app.get('/zalo/me', async (req, res) => {
     const zaloRes = await axios.get('https://graph.zalo.me/v2.0/me?fields=id,name,picture', {
       headers: {
         access_token: accessToken
-      }
+      },
+      httpsAgent: proxyAgent,
     });
 
     res.json(zaloRes.data);
